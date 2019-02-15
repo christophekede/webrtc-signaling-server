@@ -13,8 +13,8 @@ var uuid;
 var serverConnection;
 
 // RTC Variables!!
-var peerConnection = null;   // RTCPeerConnection
-var dataChannel = null;       // RTCDataChannel
+var peerConnection = null;  // RTCPeerConnection
+var dataChannel = null;     // RTCDataChannel
 
 var peerConnectionConfig = {
   'iceServers': [

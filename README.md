@@ -9,6 +9,11 @@ As the name suggests, the aim of this fork is to use an RTCDataChannel instead o
 The RTCDataChannel specific code is based on Mozilla's RTCDataChannel sample:  
 https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
 
+Note that as per the original repo, this project uses a Websocket as the signalling server.  
+The node.js server sets up a Websocket, and each 'client' connects to it with a unique UUID.  
+The server then broadcasts out every message that it receives, and the clients then decide what to do with each message
+(and ignore it if it actually originally came from them!)
+
 The following (still relevant) instructions are from Shane Tully's original repo:
 
 ## Usage
