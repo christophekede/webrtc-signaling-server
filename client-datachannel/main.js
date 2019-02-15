@@ -72,7 +72,9 @@ function start(isCaller) {
   if (isCaller) {
     peerConnection.createOffer()
       .then(offer => peerConnection.setLocalDescription(offer))
+      .then(() => console.log('set local offer description'))
       .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
+      .then(() => console.log('sent offer description to remote'))
       .catch(errorHandler);
   }
 }
@@ -85,18 +87,26 @@ function gotMessageFromServer(message) {
   // Ignore messages from ourself
   if (signal.uuid == uuid) return;
 
+  console.log('Signal: ' + message.data);
+
   if (signal.sdp) {
     peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(function () {
       // Only create answers in response to offers
       if (signal.sdp.type == 'offer') {
+        console.log('got offer');
+
         peerConnection.createAnswer()
         .then(answer => peerConnection.setLocalDescription(answer))
+        .then(() => console.log('set local answer description'))
         .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
+        .then(() => console.log('sent answer description to remote'))
         .catch(errorHandler);
       }
     }).catch(errorHandler);
   } else if (signal.ice) {
-    peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice)).catch(errorHandler);
+    peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
+    .then(() => console.log('Added ice candidate'))
+    .catch(errorHandler);
   }
 }
 
