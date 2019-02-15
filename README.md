@@ -1,13 +1,13 @@
-WebRTC Example
+WebRTC Example - RTCDataChannel
 ==============
 
-#### shane tully (shanetully.com)
+This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.
 
-An 'as simple as it gets' WebRTC example.
+https://github.com/shanet/WebRTC-Example
 
-See [https://shanetully.com/2014/09/a-dead-simple-webrtc-example/](https://shanetully.com/2014/09/a-dead-simple-webrtc-example/) for a detailed walkthrough of the code.
+As the name suggests, the aim of this fork is to use an RTCDataChannel instead of the normal media track.
 
-Note: This repo is kept updated. The general ideas are there, but the above blog post may be somewhat out of date with the code in this repo.
+The following (still relevant) instructions are from Shane Tully's original repo:
 
 ## Usage
 
@@ -35,7 +35,7 @@ WebRTC is a rapidly evolving beast. Being an example that I don't check often, I
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Shane Tully
+Copyright (c) 2014 Zac Duthie
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
