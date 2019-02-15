@@ -20,10 +20,13 @@ const handleRequest = function(request, response) {
 
   if(request.url === '/') {
     response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(fs.readFileSync('client/index.html'));
-  } else if(request.url === '/webrtc.js') {
+    response.end(fs.readFileSync('client-datachannel/index.html'));
+  } else if(request.url === '/main.js') {
     response.writeHead(200, {'Content-Type': 'application/javascript'});
-    response.end(fs.readFileSync('client/webrtc.js'));
+    response.end(fs.readFileSync('client-datachannel/main.js'));
+  } else if(request.url === '/main.css') {
+    response.writeHead(200, {'Content-Type': 'text/css'});
+    response.end(fs.readFileSync('client-datachannel/main.css'));
   }
 };
 
