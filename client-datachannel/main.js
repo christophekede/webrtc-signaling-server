@@ -37,21 +37,28 @@ function startup() {
 
   // Set event listeners for user interface widgets
 
-  connectButton.addEventListener('click', startCall, false);
+  connectButton.addEventListener('click', connect, false);
   disconnectButton.addEventListener('click', disconnectPeers, false);
   sendButton.addEventListener('click', sendMessageThroughDataChannel, false);
 
-  // And set up our signalling server
+  // And set up connection to our websocket signalling server
+
   uuid = createUUID();
 
   serverConnection = new WebSocket('wss://' + window.location.hostname + ':8443');
   serverConnection.onmessage = gotMessageFromServer;
 }
 
-function startCall() {
-  console.log('start');
+// Called when we initiate the connection
+
+function connect() {
+  console.log('connect');
   start(true);
 }
+
+// Start the WebRTC Connection
+// We're either the caller (when we click 'connect' on our page)
+// Or the receiver (when the other page clicks 'connect' and we recieve a signalling message through the websocket server)
 
 function start(isCaller) {
   peerConnection = new RTCPeerConnection(peerConnectionConfig);
@@ -71,15 +78,19 @@ function start(isCaller) {
   // Kick it off (if we're the caller)
   if (isCaller) {
     peerConnection.createOffer()
-      .then(offer => peerConnection.setLocalDescription(offer))
-      .then(() => console.log('set local offer description'))
-      .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
-      .then(() => console.log('sent offer description to remote'))
-      .catch(errorHandler);
+        .then(offer => peerConnection.setLocalDescription(offer))
+        .then(() => console.log('set local offer description'))
+        .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
+        .then(() => console.log('sent offer description to remote'))
+        .catch(errorHandler);
   }
 }
 
+// Handle messages from the Websocket signalling server
+
 function gotMessageFromServer(message) {
+  // If we haven't started WebRTC, now's the time to do it
+  // We must be the receiver then (ie not the caller)
   if (!peerConnection) start(false);
 
   var signal = JSON.parse(message.data);
@@ -87,7 +98,7 @@ function gotMessageFromServer(message) {
   // Ignore messages from ourself
   if (signal.uuid == uuid) return;
 
-  console.log('Signal: ' + message.data);
+  console.log('signal: ' + message.data);
 
   if (signal.sdp) {
     peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(function () {
@@ -96,30 +107,33 @@ function gotMessageFromServer(message) {
         console.log('got offer');
 
         peerConnection.createAnswer()
-        .then(answer => peerConnection.setLocalDescription(answer))
-        .then(() => console.log('set local answer description'))
-        .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
-        .then(() => console.log('sent answer description to remote'))
-        .catch(errorHandler);
+          .then(answer => peerConnection.setLocalDescription(answer))
+          .then(() => console.log('set local answer description'))
+          .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
+          .then(() => console.log('sent answer description to remote'))
+          .catch(errorHandler);
       }
     }).catch(errorHandler);
   } else if (signal.ice) {
+    console.log('received ice candidate from remote');
     peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
-    .then(() => console.log('Added ice candidate'))
-    .catch(errorHandler);
+      .then(() => console.log('added ice candidate'))
+      .catch(errorHandler);
   }
 }
 
 function gotIceCandidate(event) {
   if (event.candidate != null) {
-    serverConnection.send(JSON.stringify({ 'ice': event.candidate, 'uuid': uuid }));
+    console.log('got ice candidate');
+    serverConnection.send(JSON.stringify({ 'ice': event.candidate, 'uuid': uuid }))
+    console.log('sent ice candiate to remote');
   }
 }
 
 // Called when we are not the caller (ie we are the receiver)
 // and the data channel has been opened
 function handleDataChannelCreated(event) {
-  console.log('DataChannel Opened');
+  console.log('dataChannel opened');
 
   dataChannel = event.channel;
   dataChannel.onmessage = handleDataChannelReceiveMessage;
@@ -133,7 +147,7 @@ function handleDataChannelCreated(event) {
 
 function sendMessageThroughDataChannel() {
   var message = messageInputBox.value;
-  console.log("Sending: " + message);
+  console.log("sending: " + message);
   dataChannel.send(message);
 
   // Clear the input box and re-focus it, so that we're
@@ -149,7 +163,7 @@ function sendMessageThroughDataChannel() {
 
 function handleDataChannelStatusChange(event) {
   if (dataChannel) {
-    console.log("DataChannel Status: " + dataChannel.readyState);
+    console.log("dataChannel status: " + dataChannel.readyState);
 
     var state = dataChannel.readyState;
 
@@ -180,12 +194,12 @@ function handleDataChannelReceiveMessage(event) {
   receiveBox.appendChild(el);
 }
 
-// Close the connection, including data channels if they're open.
+// Close the connection, including data channels if it's open.
 // Also update the UI to reflect the disconnected status.
 
 function disconnectPeers() {
 
-  // Close the RTCDataChannels if they're open.
+  // Close the RTCDataChannel if it's open.
 
   dataChannel.close();
 
