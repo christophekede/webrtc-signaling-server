@@ -1,11 +1,13 @@
 WebRTC Example - RTCDataChannel
 ==============
 
-This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.
-
+This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.  
 https://github.com/shanet/WebRTC-Example
 
 As the name suggests, the aim of this fork is to use an RTCDataChannel instead of the normal media track.
+
+The RTCDataChannel specific code is based on Mozilla's RTCDataChannel sample:  
+https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
 
 The following (still relevant) instructions are from Shane Tully's original repo:
 
