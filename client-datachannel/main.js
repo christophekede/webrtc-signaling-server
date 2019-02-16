@@ -101,19 +101,22 @@ function gotMessageFromServer(message) {
   console.log('signal: ' + message.data);
 
   if (signal.sdp) {
-    peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(function () {
-      // Only create answers in response to offers
-      if (signal.sdp.type == 'offer') {
-        console.log('got offer');
+    peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp))
+      .then(() => console.log('set remote description'))
+      .then(function () {
+        // Only create answers in response to offers
+        if (signal.sdp.type == 'offer') {
+          console.log('got offer');
 
-        peerConnection.createAnswer()
-          .then(answer => peerConnection.setLocalDescription(answer))
-          .then(() => console.log('set local answer description'))
-          .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
-          .then(() => console.log('sent answer description to remote'))
-          .catch(errorHandler);
-      }
-    }).catch(errorHandler);
+          peerConnection.createAnswer()
+            .then(answer => peerConnection.setLocalDescription(answer))
+            .then(() => console.log('set local answer description'))
+            .then(() => serverConnection.send(JSON.stringify({ 'sdp': peerConnection.localDescription, 'uuid': uuid })))
+            .then(() => console.log('sent answer description to remote'))
+            .catch(errorHandler);
+        }
+      })
+      .catch(errorHandler);
   } else if (signal.ice) {
     console.log('received ice candidate from remote');
     peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
