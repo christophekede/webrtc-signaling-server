@@ -42,7 +42,7 @@ WebRTC is a rapidly evolving beast. Being an example that I don't check often, I
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Zac Duthie
+Copyright (c) 2019 Shane Tully, Zac Duthie
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
