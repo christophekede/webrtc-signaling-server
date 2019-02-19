@@ -14,7 +14,7 @@ The node.js server sets up a Websocket, and each 'client' connects to it with a 
 The server then broadcasts out every message that it receives, and the clients then decide what to do with each message
 (and ignore it if it actually originally came from them!)
 
-The following (still relevant) instructions are from Shane Tully's original repo:
+The following instructions are a slightly modified version of those (still relevant) in the main repo:
 
 ## Usage
 
