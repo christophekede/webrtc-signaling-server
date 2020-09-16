@@ -17,9 +17,16 @@ const serverConfig = {
 const app = express();
 app.use(express.static('client-datachannel')); // Use datachannel example for now
 
+app.get('/', function (req, res) {
+  res.send('hello world')
+})
+
 const httpsServer = https.createServer(serverConfig, app);
 httpsServer.listen(HTTPS_PORT,'0.0.0.0');
 
+httpsServer.get('/',(req,res) => {
+  res.render('');
+});
 // ----------------------------------------------------------------------------------------
 
 // Create a server for handling websocket calls
