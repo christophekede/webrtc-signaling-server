@@ -7,8 +7,9 @@ NOTE: I removed https support and made other changes to make this work. Useful r
 - go to project folder and do npm install etc.  
 - run `heroku create`
 - then run `heroku local web` to test on local machine
-- deploy using `git push heroku main`
+- deploy using `git push heroku main` (after any commits)
 
+Currently running on https://serene-fortress-62530.herokuapp.com/, allows two different people to chat.
 
 This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.  
 https://github.com/shanet/WebRTC-Example
