@@ -18,7 +18,7 @@ const app = express();
 app.use(express.static('client-datachannel')); // Use datachannel example for now
 
 const httpsServer = https.createServer(serverConfig, app);
-httpsServer.listen(HTTPS_PORT);
+httpsServer.listen(HTTPS_PORT,'0.0.0.0');
 
 // ----------------------------------------------------------------------------------------
 
