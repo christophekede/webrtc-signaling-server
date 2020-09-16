@@ -1,5 +1,14 @@
 WebRTC Example - RTCDataChannel
 ==============
+## Instructions for integrating with heroku
+
+NOTE: I removed https support and made other changes to make this work. Useful resources: https://devcenter.heroku.com/articles/getting-started-with-nodejs, https://devcenter.heroku.com/articles/node-websockets.
+- make heroku account and download CLI
+- go to project folder and do npm install etc.  
+- run `heroku create`
+- then run `heroku local web` to test on local machine
+- deploy using `git push heroku main`
+
 
 This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.  
 https://github.com/shanet/WebRTC-Example
