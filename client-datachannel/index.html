@@ -12,7 +12,7 @@
   <p>This sample is a simple example of how to use an <code>RTCDataChannel</code> to
   exchange data between two pages. It is taken from Shane Tully's 'as simple as it gets' WebRTC Example,
   and combined with Mozilla's Simple RTCDataChannel sample.</p>
-  
+  <p id="warningText" style="color:red"></p> 
   <div class="controlbox">
     <button id="connectButton" name="connectButton" class="buttonleft">
       Connect
@@ -21,10 +21,10 @@
       Disconnect
     </button>
   </div>
-  
+
   <div class="messagebox">
     <label for="message">Enter a message:
-      <input type="text" name="message" id="message" placeholder="Message text" 
+      <input type="text" name="message" id="message" placeholder="Message text"
               inputmode="latin" size=60 maxlength=120 disabled>
     </label>
     <button id="sendButton" name="sendButton" class="buttonright" disabled>

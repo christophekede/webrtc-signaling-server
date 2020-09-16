@@ -1,4 +1,3 @@
-
 // Define "global" variables
 
 // UI variables
@@ -45,8 +44,15 @@ function startup() {
 
   uuid = createUUID();
 
-  serverConnection = new WebSocket('wss://' + window.location.hostname + ':8443');
+  var HOST = location.origin.replace(/^http/, 'ws');
+  serverConnection = new WebSocket(HOST);
   serverConnection.onmessage = gotMessageFromServer;
+  serverConnection.onclose = function(event) {
+    console.log(event);
+    console.log("WebSocket is closed now.");
+    document.getElementById('warningText').innerText =
+      "Only two clients can connect at a time, please refresh and try again later.";
+  }
 }
 
 // Called when we initiate the connection
@@ -236,3 +242,8 @@ function createUUID() {
 
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
+
+// close websocket connection when tab closes
+window.addEventListener('beforeunload', function (e) {
+  disconnectPeers();
+});

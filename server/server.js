@@ -1,4 +1,4 @@
-const HTTPS_PORT = 8443;
+const HTTPS_PORT = process.env.PORT || 8443;
 
 const fs = require('fs');
 const express = require('express');
@@ -18,7 +18,7 @@ const app = express();
 app.use(express.static('client-datachannel')); // Use datachannel example for now
 
 const httpsServer = https.createServer(serverConfig, app);
-httpsServer.listen(HTTPS_PORT, '0.0.0.0');
+httpsServer.listen(HTTPS_PORT);
 
 // ----------------------------------------------------------------------------------------
 
@@ -26,11 +26,16 @@ httpsServer.listen(HTTPS_PORT, '0.0.0.0');
 const wss = new WebSocketServer({server: httpsServer});
 
 wss.on('connection', function(ws) {
+  if (wss.clients.size > 2) {
+    // we support at most 2 clients at a time right now.
+    ws.close(1002,"Closing connection, can handle at most 2 connections at a time.");
+  }
   ws.on('message', function(message) {
     // Broadcast any received message to all clients
     console.log('received: %s', message);
     wss.broadcast(message);
   });
+  ws.on('error',function(e){});
 });
 
 wss.broadcast = function(data) {
