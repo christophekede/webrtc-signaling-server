@@ -11,6 +11,7 @@ NOTE: I removed https support and made other changes to make this work. Useful r
 
 Currently running on https://serene-fortress-62530.herokuapp.com/, allows two different people to chat. Note that server goes to sleep after lack of activity, so it might be slower to load. You can see a log of the server activity by running `heroku logs --tail` in the project directory.
 
+-----
 
 This is a fork of Shane Tully's (shanetully.com)  original 'as simple as it gets' WebRTC Example.  
 https://github.com/shanet/WebRTC-Example
