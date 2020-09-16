@@ -8,6 +8,7 @@ const WebSocketServer = WebSocket.Server;
 
 const server = express()
   .use(express.static('client-datachannel'))
+  .use('/video',express.static('client-peerconnection'))
   .listen(HTTP_PORT, () => console.log(`Listening on ${HTTP_PORT}`));
 
 // ----------------------------------------------------------------------------------------
