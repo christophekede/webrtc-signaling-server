@@ -1,25 +1,25 @@
 {
-  "name": "WebRTC-Example-RTCDataChannel",
+  "name": "webrtc-signaling-server",
   "version": "1.0.0",
-  "description": "An 'as simple as it gets' WebRTC example.",
-  "main": "main.js",
+  "description": "WebRTC signaling server using websockets.",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zcduthie/WebRTC-Example-RTCDataChannel.git"
+    "url": "git+https://github.com/shubhamchandak94/webrtc-signaling-server.git"
   },
   "keywords": [
     "webrtc"
   ],
-  "author": "shane tully",
+  "author": "Shubham Chandak",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zcduthie/WebRTC-Example-RTCDataChannel/issues"
+    "url": "https://github.com/shubhamchandak94/webrtc-signaling-server/issues"
   },
-  "homepage": "https://github.com/zcduthie/WebRTC-Example-RTCDataChannel#readme",
+  "homepage": "https://github.com/shubhamchandak94/webrtc-signaling-server/",
   "dependencies": {
     "ws": "^3.3.2",
     "express": "^4.16.4"
