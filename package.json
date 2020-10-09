@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/shubhamchandak94/webrtc-signaling-server/",
   "dependencies": {
-    "ws": "^3.3.2",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "pug": "^3.0.0",
+    "ws": "^3.3.2"
   }
 }

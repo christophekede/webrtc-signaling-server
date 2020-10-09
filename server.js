@@ -6,17 +6,21 @@ const WebSocketServer = WebSocket.Server;
 
 // ----------------------------------------------------------------------------------------
 
-const server = express()
-  .use(express.static('./'))
-  .listen(HTTP_PORT, () => console.log(`Listening on ${HTTP_PORT}`));
+const app = express();
+const server = app.listen(HTTP_PORT, () => console.log(`Listening on ${HTTP_PORT}`));
+app.set('view engine', 'pug');
+app.set('views', './');
+
 
 // ----------------------------------------------------------------------------------------
 
 // Create a server for handling websocket calls
 const wss = new WebSocketServer({ server });
 
-var serverAddress = document.getElementById("serverAddress");
-serverAddress.innerHTML = wss.url;
+
+app.get('/', function (req, res) {
+  res.render('index', { nwebsockets: wss.clients.size });
+});
 
 wss.on('connection', function(ws) {
   if (wss.clients.size > 2) {
@@ -39,7 +43,4 @@ wss.broadcast = function(data) {
   });
 };
 
-console.log('Server running. Visit http://localhost:' + HTTP_PORT + ' in Firefox/Chrome.\n\n\
-Some important notes:\n\
-  * Some browsers or OSs may not allow the webcam to be used by multiple pages at once. You may need to use two different browsers or machines.\n'
-);
+console.log('Server running. Visit http://localhost:' + HTTP_PORT + '.\n\n');
