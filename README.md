@@ -9,7 +9,7 @@ NOTE: I removed https support and made other changes to make this work. Useful r
 - then run `heroku local web` to test on local machine
 - deploy using `git push heroku master` (after any commits)
 
-Currently running on https://serene-fortress-62530.herokuapp.com/, allows two connections to signaling server. Note that server goes to sleep after lack of activity, so it might be slower to load. You can see a log of the server activity by running `heroku logs --tail` in the project directory.
+Currently running on https://vast-earth-73765.herokuapp.com/, allows two connections to signaling server. Note that server goes to sleep after lack of activity, so it might be slower to load. You can see a log of the server activity by running `heroku logs --tail` in the project directory.
 
 The webpage displays the number of websocket connections currently active.
 
