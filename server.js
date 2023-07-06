@@ -23,10 +23,10 @@ app.get('/', function (req, res) {
 });
 
 wss.on('connection', function(ws) {
-  if (wss.clients.size > 2) {
-    // we support at most 2 clients at a time right now.
-    ws.close(1002,"Closing connection, can handle at most 2 connections at a time.");
-  }
+  // if (wss.clients.size > 2) {
+  //   // we support at most 2 clients at a time right now.
+  //   ws.close(1002,"Closing connection, can handle at most 2 connections at a time.");
+  // }
   ws.on('message', function(message) {
     // Broadcast any received message to all clients
     console.log('received: %s', message);
