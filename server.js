@@ -43,4 +43,18 @@ wss.broadcast = function(data) {
   });
 };
 
+
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, 30000);
+
+wss.on('close', function close() {
+  clearInterval(interval);
+});
+
 console.log('Server running. Visit http://localhost:' + HTTP_PORT + '.\n\n');
