@@ -33,6 +33,10 @@ wss.on('connection', function(ws) {
     wss.broadcast(message);
   });
   ws.on('error',function(e){});
+
+  ws.on("close", function() {
+       return ws.terminate();
+     });
 });
 
 wss.broadcast = function(data) {
