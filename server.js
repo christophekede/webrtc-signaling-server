@@ -41,9 +41,9 @@ wss.on('connection', function(ws) {
 
 wss.broadcast = function(data) {
   this.clients.forEach(function(client) {
-    if(client.readyState === WebSocket.OPEN) {
-      client.send(data);
-    }
+    if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
   });
 };
 
